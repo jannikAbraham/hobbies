@@ -18,4 +18,14 @@ public class UserService
   {
     return userDao.findAll();
   }
+
+  public User save(User user)
+  {
+    return userDao.save(user);
+  }
+
+  public void  deleteById(Long id)
+  {
+    userDao.deleteById(id);
+  }
 }

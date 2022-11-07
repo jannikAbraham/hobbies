@@ -2,13 +2,15 @@ package de.jannik.hobbies.model.entity;
 
 import com.sun.istack.NotNull;
 import de.jannik.hobbies.model.enums.Gender;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class User
 {
   @Id
@@ -26,7 +28,11 @@ public class User
   private Gender gender;
 
   @NotNull
+  @CreatedDate
   private LocalDateTime joinTime;
+
+  @NotNull
+  private boolean active = true;
 
   public User()
   {
@@ -102,8 +108,6 @@ public class User
   {
     this.active = active;
   }
-
-  private Boolean active;
 
   public Long getId()
   {
