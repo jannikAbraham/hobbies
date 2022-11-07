@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService
@@ -24,8 +25,16 @@ public class UserService
     return userDao.save(user);
   }
 
-  public void  deleteById(Long id)
+  public void deleteById(Long id)
   {
     userDao.deleteById(id);
   }
+
+  public User findById(Long id)
+  {
+   if (id == null)
+     return null;
+   return userDao.findById(id).orElse(null);
+  }
+
 }

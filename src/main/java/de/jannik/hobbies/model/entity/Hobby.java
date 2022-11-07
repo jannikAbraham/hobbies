@@ -5,14 +5,13 @@ import com.sun.istack.NotNull;
 import javax.persistence.*;
 
 @Entity
-public class country
+public class Hobby
 {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-
   @NotNull
-  private String countryCode;
+  private String name;
 
   public Long getId()
   {
@@ -24,13 +23,13 @@ public class country
     this.id = id;
   }
 
-  public String getCountryCode()
+  public String getName()
   {
-    return countryCode;
+    return name;
   }
 
-  public void setCountryCode(String countryCode)
+  public void setName(String name)
   {
-    this.countryCode = countryCode;
+    this.name = name;
   }
 }
