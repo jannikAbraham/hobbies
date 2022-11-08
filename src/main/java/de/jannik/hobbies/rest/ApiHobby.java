@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/Hobby")
+@RequestMapping("api/hobby")
 public class ApiHobby
 {
   @Autowired
   HobbyService hobbyService;
 
-  @GetMapping
+  @GetMapping("all")
   public ResponseEntity<List<Hobby>> readAll()
   {
     List<Hobby> all = hobbyService.findAll();

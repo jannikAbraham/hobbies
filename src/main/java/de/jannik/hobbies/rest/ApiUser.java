@@ -46,4 +46,13 @@ public class ApiUser
     return ResponseEntity.status(HttpStatus.OK).body(read);
   }
 
+  @GetMapping("/all")
+  public ResponseEntity <List<User>> readall()
+  {
+    List<User> users = userService.findAll();
+    if(users.isEmpty())
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    return ResponseEntity.status(HttpStatus.OK).body(users);
+  }
+
 }
