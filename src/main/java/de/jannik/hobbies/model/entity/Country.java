@@ -16,7 +16,7 @@ public class Country
   @NotNull
   private String countryCode;
 
-  @OneToMany(mappedBy = "country")
+  @OneToOne(mappedBy = "country")
   private Set<User> user;
 
   public Country() {}
