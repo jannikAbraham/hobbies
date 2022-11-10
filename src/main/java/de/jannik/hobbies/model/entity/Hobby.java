@@ -3,8 +3,11 @@ package de.jannik.hobbies.model.entity;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Table(name = "hobby")
 public class Hobby
 {
   @Id
@@ -12,6 +15,13 @@ public class Hobby
   private Long id;
   @NotNull
   private String name;
+
+  @ManyToMany(mappedBy = "hobbies")
+  private Set<User> users = new HashSet<>();
+
+  public Hobby()
+  {
+  }
 
   public Long getId()
   {
@@ -32,4 +42,15 @@ public class Hobby
   {
     this.name = name;
   }
+
+  public Set<User> getUsers()
+  {
+    return users;
+  }
+
+  public void setUsers(Set<User> users)
+  {
+    this.users = users;
+  }
+
 }

@@ -5,9 +5,7 @@ import de.jannik.hobbies.service.HobbyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,12 +16,22 @@ public class ApiHobby
   @Autowired
   HobbyService hobbyService;
 
-  @GetMapping("all")
+  @GetMapping("/all")
   public ResponseEntity<List<Hobby>> readAll()
   {
     List<Hobby> all = hobbyService.findAll();
-    if(all.isEmpty())
+    if (all.isEmpty())
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(all);
     return ResponseEntity.status(HttpStatus.OK).body(all);
   }
+
+  @PutMapping("/create")
+  public ResponseEntity<Hobby> crateHobby(
+      @RequestBody
+      Hobby hobby)
+  {
+    Hobby save = hobbyService.save(hobby);
+    return ResponseEntity.status(HttpStatus.OK).body(hobby);
+  }
+
 }

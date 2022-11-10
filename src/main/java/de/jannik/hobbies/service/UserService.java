@@ -20,9 +20,13 @@ public class UserService
     return userDao.findAll();
   }
 
-  public User save(User user)
+  public Optional<User> save(User user)
   {
-    return userDao.save(user);
+    if (user.getId() == null)
+    {
+      return Optional.of(userDao.save(user));
+    }
+    return Optional.empty();
   }
 
   public void deleteById(Long id)
@@ -32,9 +36,18 @@ public class UserService
 
   public User findById(Long id)
   {
-   if (id == null)
-     return null;
-   return userDao.findById(id).orElse(null);
+    if (id == null)
+      return null;
+    return userDao.findById(id).orElse(null);
+  }
+
+  public Optional<User> update(User user)
+  {
+    if (user.getId() != null)
+    {
+      return Optional.of(userDao.save(user));
+    }
+    return Optional.empty();
   }
 
 }

@@ -8,9 +8,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
+@Table(name = "user")
 public class User
 {
   @Id
@@ -34,6 +36,15 @@ public class User
   @NotNull
   private boolean active = true;
 
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(name = "hobby_user",joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
+             inverseJoinColumns = {@JoinColumn(name = "hobby_id",referencedColumnName = "id")})
+  private Set<Hobby> hobbies = new HashSet<>();
+
+  @ManyToOne
+  @JoinColumn(name = "country_id",nullable = false)
+  private Country countries;
+
   public User()
   {
   }
@@ -47,6 +58,16 @@ public class User
     this.gender = gender;
     this.joinTime = joinTime;
     this.active = active;
+  }
+
+  public Long getId()
+  {
+    return id;
+  }
+
+  public void setId(Long id)
+  {
+    this.id = id;
   }
 
   public String getName()
@@ -99,24 +120,24 @@ public class User
     this.joinTime = joinTime;
   }
 
-  public Boolean getActive()
+  public boolean isActive()
   {
     return active;
   }
 
-  public void setActive(Boolean active)
+  public void setActive(boolean active)
   {
     this.active = active;
   }
 
-  public Long getId()
+  public Set<Hobby> getHobbies()
   {
-    return id;
+    return hobbies;
   }
 
-  public void setId(Long id)
+  public void setHobbies(Set<Hobby> hobbies)
   {
-    this.id = id;
+    this.hobbies = hobbies;
   }
 
   @Override

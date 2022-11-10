@@ -18,5 +18,9 @@ public class CountryService
     return countryDao.findAll();
   }
 
+  public Country save(Country country)
+  {
+    return countryDao.save(country);
+  }
 
 }

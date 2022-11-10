@@ -2,6 +2,7 @@ package de.jannik.hobbies.rest;
 
 import de.jannik.hobbies.model.entity.User;
 import de.jannik.hobbies.service.UserService;
+import org.apache.el.util.ReflectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,40 +18,51 @@ public class ApiUser
   UserService userService;
 
   @PostMapping
-  public ResponseEntity<User> create(@RequestBody User user)
+  public ResponseEntity<User> create(
+      @RequestBody
+      User user)
   {
-    User save = userService.save(user);
-    return ResponseEntity.status(HttpStatus.CREATED).body(save);
+    Optional<User> save = userService.save(user);
+    return save.map(value -> ResponseEntity.status(HttpStatus.CREATED).body(value)).orElseGet(() -> ResponseEntity.badRequest().body(null));
   }
+
   //toDo: warp this in a response entity
   @DeleteMapping("/{id}")
-  public ResponseEntity<Boolean> delete(@PathVariable Long id)
+  public ResponseEntity<Boolean> delete(
+      @PathVariable
+      Long id)
   {
-    if(userService.findById(id)== null)
+    if (userService.findById(id) == null)
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     userService.deleteById(id);
     return ResponseEntity.status(HttpStatus.OK).body(true);
   }
-  @PatchMapping("/{id}")
-  public ResponseEntity<?> update(@RequestBody User partialUpdate ,@PathVariable Long id)
-  {
 
-    return null;
+  @PutMapping("/update")
+  public ResponseEntity<?> update(
+      @RequestBody
+      User user)
+  {
+    userService.update(user);
+    return ResponseEntity.status(HttpStatus.OK).body(user);
   }
+
   @GetMapping("/{id}")
-  public ResponseEntity<User> read(@PathVariable Long id)
+  public ResponseEntity<User> read(
+      @PathVariable
+      Long id)
   {
     User read = userService.findById(id);
-    if(read== null)
+    if (read == null)
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     return ResponseEntity.status(HttpStatus.OK).body(read);
   }
 
   @GetMapping("/all")
-  public ResponseEntity <List<User>> readall()
+  public ResponseEntity<List<User>> readall()
   {
     List<User> users = userService.findAll();
-    if(users.isEmpty())
+    if (users.isEmpty())
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     return ResponseEntity.status(HttpStatus.OK).body(users);
   }

@@ -19,4 +19,9 @@ public class HobbyService
     return hobbyDao.findAll();
   }
 
+  public Hobby save(Hobby hobby)
+  {
+    return hobbyDao.save(hobby);
+  }
+
 }
