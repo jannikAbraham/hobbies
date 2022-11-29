@@ -1,4 +1,4 @@
-package de.jannik.hobbies.api.model.dto;
+package de.jannik.hobbies.api.model.mapper.dto;
 
 import com.sun.istack.NotNull;
 import de.jannik.hobbies.model.entity.Hobby;

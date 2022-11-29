@@ -1,4 +1,4 @@
-package de.jannik.hobbies.api.model.dto;
+package de.jannik.hobbies.api.model.mapper.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

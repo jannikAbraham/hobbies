@@ -15,5 +15,5 @@ public interface UserDao extends JpaRepository<User,Long>
   List<User> findAllByCountryId(Long id);
 
 
-  List<User> findAllByHobbyId(Long id);
+
 }

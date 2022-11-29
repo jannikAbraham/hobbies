@@ -1,13 +1,10 @@
 package de.jannik.hobbies.api.rest;
 
-import de.jannik.hobbies.api.model.dto.UserDto;
-import de.jannik.hobbies.api.model.dto.UserHobbyDto;
+import de.jannik.hobbies.api.model.mapper.dto.UserDto;
+import de.jannik.hobbies.api.model.mapper.dto.UserHobbyDto;
 import de.jannik.hobbies.api.service.UserRestService;
-import de.jannik.hobbies.model.entity.Hobby;
-import de.jannik.hobbies.model.entity.User;
 import de.jannik.hobbies.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +37,9 @@ public class UserRest
   }
 
   @PutMapping("/update")
-  public ResponseEntity<?> update(@RequestBody UserDto userDto)
+  public ResponseEntity<?> update(
+      @RequestBody
+      UserDto userDto)
   {
     return userRestService.update(userDto);
   }
@@ -60,13 +59,17 @@ public class UserRest
   }
 
   @GetMapping("/country/{id}")
-  public ResponseEntity<List<UserDto>> findUsersByCountry(@PathVariable Long id)
+  public ResponseEntity<List<UserDto>> findUsersByCountry(
+      @PathVariable
+      Long id)
   {
     return userRestService.findAllByCountry(id);
   }
 
   @PostMapping("/user/hobby")
-  public ResponseEntity<UserDto> saveUserHobbies(@RequestBody UserHobbyDto userHobbyDto)
+  public ResponseEntity<UserDto> saveUserHobbies(
+      @RequestBody
+      UserHobbyDto userHobbyDto)
   {
     return userRestService.saveUserHobbies(userHobbyDto);
   }

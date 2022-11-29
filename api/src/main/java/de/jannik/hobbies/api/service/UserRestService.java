@@ -1,7 +1,7 @@
 package de.jannik.hobbies.api.service;
 
-import de.jannik.hobbies.api.model.dto.UserDto;
-import de.jannik.hobbies.api.model.dto.UserHobbyDto;
+import de.jannik.hobbies.api.model.mapper.dto.UserDto;
+import de.jannik.hobbies.api.model.mapper.dto.UserHobbyDto;
 import de.jannik.hobbies.api.model.mapper.UserMapper;
 import de.jannik.hobbies.model.entity.Country;
 import de.jannik.hobbies.model.entity.Hobby;
@@ -9,16 +9,13 @@ import de.jannik.hobbies.model.entity.User;
 import de.jannik.hobbies.service.CountryService;
 import de.jannik.hobbies.service.HobbyService;
 import de.jannik.hobbies.service.UserService;
-import de.jannik.hobbies.util.CountryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UserRestService
@@ -36,7 +33,7 @@ public class UserRestService
 
   public ResponseEntity<Boolean> delete(Long id)
   {
-    if (userService.findById(id) == null)
+    if (userService.findById(id).isEmpty())
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
     userService.deleteById(id);
     return ResponseEntity.ok(true);

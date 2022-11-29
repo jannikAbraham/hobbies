@@ -1,14 +1,9 @@
 package de.jannik.hobbies.api.model.mapper;
 
-import de.jannik.hobbies.api.model.dto.UserDto;
+import de.jannik.hobbies.api.model.mapper.dto.UserDto;
 import de.jannik.hobbies.model.DtoEntityMapper;
 import de.jannik.hobbies.model.entity.Country;
-import de.jannik.hobbies.model.entity.Hobby;
 import de.jannik.hobbies.model.entity.User;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 
 public class UserMapper implements DtoEntityMapper<User, UserDto>
 {

@@ -20,13 +20,12 @@ public class UserService
     return userDao.findAll();
   }
 
-
   public Optional<User> save(User user)
   {
     if (user.getId() == null)
     {
 
-      if(user.getCountry() != null)
+      if (user.getCountry() != null)
         return Optional.of(userDao.save(user));
     }
 
@@ -55,19 +54,11 @@ public class UserService
 
   public List<User> findAllByCountryId(Long id)
   {
-    if(id != null)
+    if (id != null)
     {
       return userDao.findAllByCountryId(id);
     }
     return null;
   }
 
-  public List<User> findAllByHobbyId(Long id)
-  {
-    if(id != null)
-    {
-      return userDao.findAllByHobbyId(id);
-    }
-    return null;
-  }
 }
