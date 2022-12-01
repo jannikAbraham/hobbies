@@ -21,13 +21,19 @@ public class HobbyView extends VerticalLayout implements VaadinPage
 
   public HobbyView()
   {
-    Grid<Hobby> userGrid = new Grid<>();
+    Grid<Hobby> hobbyGrid = new Grid<>();
     Button addButton = new Button("ADD");
     Button deleteButton = new Button("DELETE");
     Button updateButton = new Button("UPDATE");
 
+    HobbyDialog addHobbyDialog = new HobbyDialog("Add Hobby");
+    HobbyDialog updateHobbyDialog = new HobbyDialog("Update Hobby");
+
+    addButton.addClickListener(e -> addHobbyDialog.open());
+    updateButton.addClickListener( e -> updateHobbyDialog.open());
+
     HorizontalLayout vl1 = new HorizontalLayout(addButton, deleteButton, updateButton);
-    VerticalLayout hl1 = new VerticalLayout(userGrid, vl1);
+    VerticalLayout hl1 = new VerticalLayout(hobbyGrid, vl1);
 
     add(hl1);
 

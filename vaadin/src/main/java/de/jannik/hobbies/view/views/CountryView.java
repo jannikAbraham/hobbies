@@ -26,6 +26,12 @@ public class CountryView extends VerticalLayout implements VaadinPage
     Button deleteButton = new Button("DELETE");
     Button updateButton = new Button("UPDATE");
 
+    CountryDialog addCountryDialog = new CountryDialog("Add country");
+    CountryDialog updateCountryDialog = new CountryDialog("Update Country");
+
+    addButton.addClickListener(e -> addCountryDialog.open());
+    updateButton.addClickListener(e -> updateCountryDialog.open());
+
     HorizontalLayout vl1 = new HorizontalLayout(addButton, deleteButton, updateButton);
     VerticalLayout hl1 = new VerticalLayout(userGrid, vl1);
 
