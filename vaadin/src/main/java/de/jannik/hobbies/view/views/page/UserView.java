@@ -1,4 +1,4 @@
-package de.jannik.hobbies.view.views;
+package de.jannik.hobbies.view.views.page;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -9,8 +9,6 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.binder.ValidationResult;
-import com.vaadin.flow.data.binder.ValueContext;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.SpringComponent;
@@ -21,8 +19,9 @@ import de.jannik.hobbies.model.enums.Gender;
 import de.jannik.hobbies.service.CountryService;
 import de.jannik.hobbies.service.UserService;
 import de.jannik.hobbies.util.SpringContext;
-import de.jannik.hobbies.view.abstracts.VaadinCrudTwo;
-import de.jannik.hobbies.view.abstracts.VaadinPage;
+import de.jannik.hobbies.view.views.abstracts.VaadinCrud;
+import de.jannik.hobbies.view.views.abstracts.VaadinPage;
+import de.jannik.hobbies.view.views.AppView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +30,14 @@ import java.util.List;
 @UIScope
 @PageTitle("User View")
 @Route(value = "User", layout = AppView.class)
-public class UserView extends VaadinCrudTwo<User> implements VaadinPage
+public class UserView extends VaadinCrud<User> implements VaadinPage
 {
   public UserView(UserService userService)
   {
-    super(new User(), userService, User.class);
+    super(userService, User.class);
   }
+
+
 
   @Override
   public List<Component> getFields(Binder<User> binder)
@@ -90,5 +91,11 @@ public class UserView extends VaadinCrudTwo<User> implements VaadinPage
   public Icon getIcon()
   {
     return VaadinIcon.USER.create();
+  }
+
+  @Override
+  public User getNewEntity()
+  {
+    return new User();
   }
 }

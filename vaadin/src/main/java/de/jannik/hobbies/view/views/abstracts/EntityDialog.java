@@ -1,4 +1,4 @@
-package de.jannik.hobbies.view.abstracts;
+package de.jannik.hobbies.view.views.abstracts;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -6,21 +6,19 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.binder.ValidationException;
 import de.jannik.hobbies.service.EntityService;
 
 import java.util.List;
 
-public abstract class EntityDialog<T> extends Dialog
+public abstract class EntityDialog<Entity> extends Dialog
 {
-  private T entity;
-  private final Binder<T> binder;
-  private final EntityService<T> service;
+  private Entity entity;
+  private final Binder<Entity> binder;
+  private final EntityService<Entity> service;
 
-  public EntityDialog(T entity, EntityService<T> service, Class<T> clazz)
+  public EntityDialog(EntityService<Entity> service, Class<Entity> clazz)
   {
     // Declaring mandatory fields
-    this.entity = entity;
     this.service = service;
     binder = new BeanValidationBinder<>(clazz);
     binder.setBean(entity);
@@ -46,32 +44,25 @@ public abstract class EntityDialog<T> extends Dialog
     getFooter().add(saveButton, cancelButton);
   }
 
-  protected abstract List<Component> getComponentFields(Binder<T> binder);
+  protected abstract List<Component> getComponentFields(Binder<Entity> binder);
 
   private void saveOrUpdate()
   {
-
-    try
+    if (binder.validate().isOk())
     {
-      binder.writeBean(entity);
-      if (binder.validate().isOk())
-      {
-        service.saveOrUpdate(entity);
-        entityWasSaved(entity);
-        close();
-      }
-    }
-    catch (ValidationException e)
-    {
-      e.printStackTrace();
+      service.saveOrUpdate(entity);
+      entityWasSaved(entity);
+      close();
     }
   }
 
-  public abstract void entityWasSaved(T updatedEntity);
+  public abstract void entityWasSaved(Entity updatedEntity);
 
-  public void setEntity(T entity)
+  public void setEntity(Entity entity)
   {
     this.entity = entity;
     binder.setBean(entity);
   }
+
+  public abstract Entity getNewEntity();
 }

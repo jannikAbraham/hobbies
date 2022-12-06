@@ -15,9 +15,10 @@ public class Country
   @Column(unique = true)
   private String code;
 
-  @OneToOne
-  @JoinColumn(name = "user_id")
-  private User user;
+  @NotNull
+  private String helperText;
+
+
 
 
 
@@ -45,13 +46,13 @@ public class Country
     this.code = code;
   }
 
-  public String getUser()
+  public String getHelperText()
   {
-    return user.getName();
+    return helperText;
   }
 
-  public void setUser(User user)
+  public void setHelperText(String helperText)
   {
-    this.user = user;
+    this.helperText = helperText;
   }
 }

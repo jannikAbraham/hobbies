@@ -1,4 +1,4 @@
-package de.jannik.hobbies.view.abstracts;
+package de.jannik.hobbies.view.views.abstracts;
 
 import com.vaadin.flow.component.icon.Icon;
 

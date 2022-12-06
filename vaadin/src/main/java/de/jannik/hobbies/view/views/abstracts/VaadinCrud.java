@@ -1,4 +1,4 @@
-package de.jannik.hobbies.view.abstracts;
+package de.jannik.hobbies.view.views.abstracts;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -14,27 +14,35 @@ import java.util.List;
 
 @UIScope
 @SpringComponent
-public abstract class VaadinCrudTwo<Entity> extends VerticalLayout
+public abstract class VaadinCrud<Entity> extends VerticalLayout
 {
-  private final Grid<Entity> grid;
+  private Grid<Entity> grid;
   private EntityDialog<Entity> entityDialog;
-  private Entity newEntity;
+
   private EntityService<Entity> service;
   private Class<Entity> clazz;
 
-  public VaadinCrudTwo(Entity newEntity, EntityService<Entity> service, Class<Entity> clazz)
+  public VaadinCrud(EntityService<Entity> service, Class<Entity> clazz)
   {
-    this.newEntity = newEntity;
+    init(service,clazz,true);
+  }
+
+  public VaadinCrud(EntityService<Entity> service, Class<Entity> clazz,Boolean autoCreateColumns)
+  {
+    init(service,clazz,autoCreateColumns);
+  }
+
+  private void init(EntityService<Entity> service, Class<Entity> clazz,Boolean autoCreateColumns)
+  {
     this.service = service;
     this.clazz = clazz;
 
-    grid = new Grid<>(clazz, true);
+    grid = new Grid<>(clazz, autoCreateColumns);
     grid.setItems(service.findAll());
 
     handleEntityDialog();
     add(grid, getActionsButtons());
   }
-
 
   private HorizontalLayout getActionsButtons()
   {
@@ -46,7 +54,7 @@ public abstract class VaadinCrudTwo<Entity> extends VerticalLayout
     editButton.setEnabled(false);
 
     grid.addSelectionListener(e -> {
-      if(e.isFromClient() && e.getFirstSelectedItem().isPresent())
+      if (e.isFromClient() && e.getFirstSelectedItem().isPresent())
       {
         deleteButton.setEnabled(true);
         editButton.setEnabled(true);
@@ -58,12 +66,12 @@ public abstract class VaadinCrudTwo<Entity> extends VerticalLayout
       }
     });
 
-    return new HorizontalLayout(newButton,deleteButton,editButton);
+    return new HorizontalLayout(newButton, deleteButton, editButton);
   }
 
   private void handleEntityDialog()
   {
-    entityDialog = new EntityDialog<Entity>(newEntity, service, clazz)
+    entityDialog = new EntityDialog<Entity>(service, clazz)
     {
       @Override
       protected List<Component> getComponentFields(Binder<Entity> binder)
@@ -76,14 +84,19 @@ public abstract class VaadinCrudTwo<Entity> extends VerticalLayout
       {
         refreshData();
       }
+
+      @Override
+      public Entity getNewEntity()
+      {
+        return VaadinCrud.this.getNewEntity();
+      }
     };
   }
 
   private void createNewEntity()
   {
-    entityDialog.setEntity(newEntity);
+    entityDialog.setEntity(getNewEntity());
     entityDialog.open();
-    refreshData();
   }
 
   private void deleteEntity()
@@ -96,14 +109,19 @@ public abstract class VaadinCrudTwo<Entity> extends VerticalLayout
   {
     entityDialog.setEntity(grid.asSingleSelect().getValue());
     entityDialog.open();
-    refreshData();
+  }
+
+  public Grid<Entity> getGrid()
+  {
+    return grid;
   }
 
   private void refreshData()
   {
     grid.setItems(service.findAll());
-    entityDialog.setEntity(newEntity);
   }
+
+  public abstract Entity getNewEntity();
 
   public abstract List<Component> getFields(Binder<Entity> binder);
 }

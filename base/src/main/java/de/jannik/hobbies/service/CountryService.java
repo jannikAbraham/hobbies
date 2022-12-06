@@ -10,14 +10,27 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CountryService
+public class CountryService implements EntityService<Country>
 {
   @Autowired
   private CountryDao countryDao;
 
+  @Override
   public List<Country> findAll()
   {
     return countryDao.findAll();
+  }
+
+  @Override
+  public Country saveOrUpdate(Country country)
+  {
+    return countryDao.save(country);
+  }
+
+  @Override
+  public void delete(Country country)
+  {
+    countryDao.delete(country);
   }
 
   public Optional<Country> findByCode(String code)
