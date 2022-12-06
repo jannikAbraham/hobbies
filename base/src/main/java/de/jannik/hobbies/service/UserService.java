@@ -9,12 +9,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService
+public class UserService implements EntityService<User>
 {
   //@autowired dependency Injection
   @Autowired
   private UserDao userDao;
 
+  @Override
   public List<User> findAll()
   {
     return userDao.findAll();
@@ -38,6 +39,12 @@ public class UserService
     userDao.deleteById(id);
   }
 
+  @Override
+  public void delete(User user)
+  {
+    userDao.delete(user);
+  }
+
   public Optional<User> findById(Long id)
   {
     return userDao.findById(id);
@@ -59,6 +66,12 @@ public class UserService
       return userDao.findAllByCountryId(id);
     }
     return null;
+  }
+
+  @Override
+  public User saveOrUpdate(User user)
+  {
+    return userDao.save(user);
   }
 
 }

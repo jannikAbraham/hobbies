@@ -2,7 +2,6 @@ package de.jannik.hobbies.model.entity;
 
 import com.sun.istack.NotNull;
 import de.jannik.hobbies.model.enums.Gender;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -38,7 +37,7 @@ public class User
   @NotNull
   private boolean active = true;
 
-  @ManyToMany(cascade = CascadeType.ALL)
+  @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
   @JoinTable(name = "hobby_user",joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
              inverseJoinColumns = {@JoinColumn(name = "hobby_id",referencedColumnName = "id")})
   private Set<Hobby> hobbies = new HashSet<>();

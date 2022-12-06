@@ -3,7 +3,6 @@ package de.jannik.hobbies.model.entity;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class Country
@@ -16,7 +15,16 @@ public class Country
   @Column(unique = true)
   private String code;
 
-  public Country() {}
+  @OneToOne
+  @JoinColumn(name = "user_id")
+  private User user;
+
+
+
+  public Country()
+  {
+  }
+
   public Long getId()
   {
     return id;
@@ -37,4 +45,13 @@ public class Country
     this.code = code;
   }
 
+  public String getUser()
+  {
+    return user.getName();
+  }
+
+  public void setUser(User user)
+  {
+    this.user = user;
+  }
 }

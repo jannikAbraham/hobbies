@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class HobbyService
+public class HobbyService implements EntityService<Hobby>
 {
   @Autowired
   private HobbyDao hobbyDao;
@@ -18,6 +18,18 @@ public class HobbyService
   public List<Hobby> findAll()
   {
     return hobbyDao.findAll();
+  }
+
+  @Override
+  public Hobby saveOrUpdate(Hobby hobby)
+  {
+    return null;
+  }
+
+  @Override
+  public void delete(Hobby hobby)
+  {
+
   }
 
   public Hobby save(Hobby hobby)
