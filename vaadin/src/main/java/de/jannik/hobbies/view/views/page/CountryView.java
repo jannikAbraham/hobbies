@@ -11,11 +11,9 @@ import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import de.jannik.hobbies.model.entity.Country;
 import de.jannik.hobbies.service.CountryService;
-import de.jannik.hobbies.service.UserService;
-import de.jannik.hobbies.util.SpringContext;
+import de.jannik.hobbies.view.views.AppView;
 import de.jannik.hobbies.view.views.abstracts.VaadinCrud;
 import de.jannik.hobbies.view.views.abstracts.VaadinPage;
-import de.jannik.hobbies.view.views.AppView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,7 @@ public class CountryView extends VaadinCrud<Country> implements VaadinPage
 {
   public CountryView(CountryService countryService)
   {
-    super(countryService, Country.class,false);
+    super(countryService, Country.class, false);
     handelGridColumns();
   }
 
@@ -43,12 +41,13 @@ public class CountryView extends VaadinCrud<Country> implements VaadinPage
     TextField countryName = new TextField("CountryName");
     TextField userName = new TextField("Username");
 
-    binder.forField(countryName).withValidator(n -> n.length() >= 1, "Name cant be empty").bind(Country::getCode,Country::setCode);
-    binder.forField(userName).withValidator(n -> n.length() >= 1, "Name cant be empty").bind(Country::getHelperText,Country::setHelperText);
+    binder.forField(countryName).withValidator(n -> n.length() >= 1, "Name cant be empty").bind(Country::getCode, Country::setCode);
+    binder.forField(userName).withValidator(n -> n.length() >= 1, "Name cant be empty") .bind(Country::getHelperText, Country::setHelperText);
 
     ArrayList<Component> fieldComponents = new ArrayList<>();
     fieldComponents.add(countryName);
     fieldComponents.add(userName);
+
     return fieldComponents;
   }
 

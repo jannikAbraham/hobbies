@@ -75,11 +75,6 @@ public class UserView extends VaadinCrud<User> implements VaadinPage
 
     return fieldsComponents;
   }
-//
-//  private ValidationResult validateName(String s, ValueContext valueContext)
-//  {
-//    return ValidationResult.ok();
-//  }
 
   @Override
   public String getButtonText()

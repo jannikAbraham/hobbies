@@ -15,6 +15,9 @@ public class Hobby
   @Column(unique = true)
   private String name;
 
+  @NotNull
+  private String helperText;
+
   public Hobby()
   {
   }
@@ -39,4 +42,13 @@ public class Hobby
     this.name = name;
   }
 
+  public String getHelperText()
+  {
+    return helperText;
+  }
+
+  public void setHelperText(String helperText)
+  {
+    this.helperText = helperText;
+  }
 }

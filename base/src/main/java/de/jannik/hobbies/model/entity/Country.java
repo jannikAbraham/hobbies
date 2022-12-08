@@ -18,10 +18,6 @@ public class Country
   @NotNull
   private String helperText;
 
-
-
-
-
   public Country()
   {
   }
